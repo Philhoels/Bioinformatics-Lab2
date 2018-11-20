@@ -29,5 +29,14 @@ for (j in 1:33){
 sequences_artificial[j] <- simSeq(tree, l = lengths[j], Q=transition_matrix , type = "DNA")
 }
 
-abc <- simSeq(tree, l = 100, Q=transition_matrix , type = "DNA")
+for (k in 1:33){
+sequences_artificial[[k]][sequences_artificial[[k]] == 1] = "a"
+sequences_artificial[[k]][sequences_artificial[[k]] == "2"] = "c"
+sequences_artificial[[k]][sequences_artificial[[k]] == "3"] = "g"
+sequences_artificial[[k]][sequences_artificial[[k]] == "4"] = "t"
+}
+
+
+ape::write.dna(sequences_artificial, file ="artifical_sequences.fasta", format = "fasta", append =FALSE, nbcol = 6, colsep = " ", colw = 10)
+
 
