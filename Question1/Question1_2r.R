@@ -1,16 +1,17 @@
-# Script from Thijs
-#install.packages("ape")
 library(ape)
-#install.packages("seqinr")
 library(seqinr)
-getwd()
-lizards_sequences <- read.fasta("lizard_seqs.fasta")
 
-tree <- rtree(n = 33)
+# reading original_dataset from fasta file 
+lizards_sequences = read.fasta("lizard_seqs.fasta")
+
+# preparing data in fasta file (dna sequences include emtpy spaces which will be removed)
+for (i in 1:length(lizards_sequences)) {
+  lizards_sequences[[i]] = lizards_sequences[[i]][lizards_sequences[[i]] != " "]
+}
+
+tree <- rtree(n = length(lizards_sequences))
 plot(tree, edge.width = 2)
 
-
-#install.packages("phangorn")
 library(phangorn)
 transition_matrix <- matrix(0.25, ncol = 4, nrow = 4)
 rownames(transition_matrix) <- c("a", "c", "t", "g")
@@ -37,6 +38,6 @@ sequences_artificial[[k]][sequences_artificial[[k]] == "4"] = "t"
 }
 
   
-ape::write.dna(sequences_artificial, file ="artifical_sequences.fasta", format = "fasta", append =FALSE, nbcol = 6, colsep = " ", colw = 10)
+ape::write.dna(sequences_artificial, file ="artifical_dataset_1_2.fasta", format = "fasta", append =FALSE, nbcol = 6, colsep = " ", colw = 10)
 
 
