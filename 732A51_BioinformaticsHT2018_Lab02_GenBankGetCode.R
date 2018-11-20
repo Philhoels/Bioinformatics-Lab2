@@ -1,3 +1,4 @@
+#install.packages("ape")
 library(ape)
 ## Gene bank accession numbers taken from http://www.jcsantosresearch.org/Class_2014_Spring_Comparative/pdf/week_2/Jan_13_15_2015_GenBank_part_2.pdf
 lizards_accession_numbers <- c("JF806202", "HM161150", "FJ356743", "JF806205", 
@@ -14,4 +15,3 @@ print(lizards_sequences)
 ape::write.dna(lizards_sequences, file ="lizard_seqs.fasta", format = "fasta", append =FALSE, nbcol = 6, colsep = " ", colw = 10)
 
 
-asdf
