@@ -12,7 +12,7 @@ get_artificial_sequence_dataset = function(lizards_sequences) {
                                            rep = TRUE,
                                            prob = sequence_distributions[[i]])
   }
-  ape::write.dna(artificial_dataset, file ="artificial_dna_sequences.fasta", format = "fasta")
+  ape::write.dna(artificial_dna_sequences, file ="artificial_dna_sequences.fasta", format = "fasta")
   return(artificial_dna_sequences)
 }
 artificial_dataset = get_artificial_sequence_dataset(lizards_sequences)
