@@ -1,7 +1,7 @@
 library(seqinr)
 
 # function for simulating and saving artificial sequence dataset and comparing base compositions to original dataset
-write_artificial_sequence_dataset = function(original_dataset) {
+get_artificial_sequence_dataset = function(original_dataset) {
   # creating empty varibales which will be filled in following for-loop
   original_base_compositions = list()
   artificial_dataset = list()
@@ -35,7 +35,7 @@ write_artificial_sequence_dataset = function(original_dataset) {
   print("comparison of base compositions between original and artificial datasets (values rounded): ")
   print(comparison_base_compositions)
   # saving fasta file
-  ape::write.dna(artificial_dataset, file ="artificial_dataset.fasta", format = "fasta")
+  ape::write.dna(artificial_dataset, file ="artificial_dataset_1_1.fasta", format = "fasta")
 }
 
 # applying function to dataset of the RAG1 gene sequences from 33 lizard species
@@ -48,5 +48,5 @@ write_artificial_sequence_dataset = function(original_dataset) {
     lizards_sequences[[i]] = lizards_sequences[[i]][lizards_sequences[[i]] != " "]
   }
 
-  write_artificial_sequence_dataset(lizards_sequences)
+  get_artificial_sequence_dataset(lizards_sequences)
 
