@@ -36,7 +36,7 @@ sequences_artificial[[k]][sequences_artificial[[k]] == "3"] = "g"
 sequences_artificial[[k]][sequences_artificial[[k]] == "4"] = "t"
 }
 
-
+  
 ape::write.dna(sequences_artificial, file ="artifical_sequences.fasta", format = "fasta", append =FALSE, nbcol = 6, colsep = " ", colw = 10)
 
 
