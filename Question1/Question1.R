@@ -1,18 +1,19 @@
 library(seqinr)
 
+# data preparation (dna sequences include emtpy spaces which will be removed)
+# for (i in 1:length(lizards_sequences)) {
+#   lizards_sequences[[i]] = lizards_sequences[[i]][lizards_sequences[[i]] != " "]
+# }
+# ape::write.dna(lizards_sequences, file ="lizard_seqs.fasta", format = "fasta")
+
 # reading fasta file 
 lizards_sequences = read.fasta("lizard_seqs.fasta")
-
-# data preparation (dna sequences include emtpy spaces which will be removed)
-for (i in 1:length(lizards_sequences)) {
-  lizards_sequences[[i]] = lizards_sequences[[i]][lizards_sequences[[i]] != " "]
-}
 
 # Question 1.1
 get_artificial_sequence_dataset = function(original_dataset) {
   # creating empty varibales which will be filled in following for loop
   original_sequence_distributions = list()
-  artificial_dna_sequences = list()
+  artificial_dataset = list()
   artificial_sequence_distributions = list()
   a_original = c()
   c_original = c()
@@ -26,12 +27,12 @@ get_artificial_sequence_dataset = function(original_dataset) {
     # getting original sequence distribution for each list element
     original_sequence_distributions[[i]] = seqinr::count(original_dataset[[i]],1)/length(original_dataset[[i]])
     # creating artificial dna sequences 
-    artificial_dna_sequences[[i]] = sample(x = c("a","c","g","t"),
+    artificial_dataset[[i]] = sample(x = c("a","c","g","t"),
                                            size = length(original_dataset[[i]]),
                                            rep = TRUE,
                                            prob = original_sequence_distributions[[i]])
     # creating data.frame to compare nucleotide distributions between original and artificial sequences 
-    artificial_sequence_distributions[[i]] = seqinr::count(original_dataset[[i]],1)/length(original_dataset[[i]])
+    artificial_sequence_distributions[[i]] = seqinr::count(artificial_dataset[[i]],1)/length(artificial_dataset[[i]])
     a_original = c(a_original, original_sequence_distributions[[i]][1])
     a_artificial = c(a_artificial, artificial_sequence_distributions[[i]][1])
     c_original = c(c_original, original_sequence_distributions[[i]][2])
@@ -49,9 +50,9 @@ get_artificial_sequence_dataset = function(original_dataset) {
   print("comparison of sequence distributions between original and artificial datasets:\n")
   print(comparison_sequence_distributions)
   # saving fasta file
-  ape::write.dna(artificial_dna_sequences, file ="artificial_dna_sequences.fasta", format = "fasta")
+  ape::write.dna(artificial_dataset, file ="artificial_dataset.fasta", format = "fasta")
   # returning artificial dna sequences
-  return(artificial_dna_sequences)
+  return(artificial_dataset)
 }
 artificial_sequences = get_artificial_sequence_dataset(lizards_sequences)
 
