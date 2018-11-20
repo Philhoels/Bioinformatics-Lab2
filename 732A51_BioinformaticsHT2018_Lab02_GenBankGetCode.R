@@ -14,3 +14,4 @@ print(lizards_sequences)
 ape::write.dna(lizards_sequences, file ="lizard_seqs.fasta", format = "fasta", append =FALSE, nbcol = 6, colsep = " ", colw = 10)
 
 
+asdf
