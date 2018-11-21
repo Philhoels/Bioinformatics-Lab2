@@ -16,7 +16,8 @@ tga_count[i] <- str_count(string, pattern = "tga")
 }
 
 names_sequences <- names(lizards_sequences)
-df_original <- as.data.frame(cbind(names_sequences, taa_count, tag_count, tga_count, total_count = taa_count + tag_count + tga_count))
+df_original <- as.data.frame(cbind(names_sequences, taa_count, tag_count, tga_count, total_count_1 = taa_count + tag_count + tga_count))
+df_original
 
 artificial_sequences_1 <- read.fasta("artificial_dataset_1_1.fasta")
 taa_a1 <- c()
@@ -34,7 +35,7 @@ for (i in 1:33){
 
 names_a1 <- names(artificial_sequences_1)
 
-df_a1 <- as.data.frame(cbind(names_a1, taa_a1, tag_a1, tga_a1, total_count = taa_a1 + tag_a1 + tga_a1))
+df_a1 <- as.data.frame(cbind(names_a1, taa_a1, tag_a1, tga_a1, total_count_2 = taa_a1 + tag_a1 + tga_a1))
 df_a1
 
 
@@ -54,10 +55,11 @@ for (i in 1:33){
 
 names_a2 <- names(artificial_sequences_1)
 
-df_a2 <- as.data.frame(cbind(names_a2, taa_a2, tag_a2, tga_a2, total_count = taa_a2 + tag_a2 + tga_a2))
+df_a2 <- as.data.frame(cbind(names_a2, taa_a2, tag_a2, tga_a2, total_count_3 = taa_a2 + tag_a2 + tga_a2))
 df_a2
 
-
+df_all <- as.data.frame(cbind(df_original, df_a1, df_a2))
+df_all
 
 # 2.2 Markov chain
 nucleotide <- c("a", "c", "g", "t")
