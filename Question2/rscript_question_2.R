@@ -1,8 +1,14 @@
 # Question 2
 # 2.1 
-#install.packages("stringr")
-lizards_sequences = read.fasta("lizard_seqs.fasta")
+library(seqinr)
 library(stringr)
+
+# reading original_dataset from fasta file 
+lizards_sequences = read.fasta("lizard_seqs.fasta")
+# preparing data in fasta file (dna sequences include emtpy spaces which will be removed)
+for (i in 1:length(lizards_sequences)) {
+  lizards_sequences[[i]] = lizards_sequences[[i]][lizards_sequences[[i]] != " "]
+}
 taa_count <- c()
 tag_count <- c()
 tga_count <- c()
