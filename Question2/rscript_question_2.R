@@ -20,6 +20,8 @@ df_original <- as.data.frame(cbind(names_sequences, taa_count, tag_count, tga_co
 df_original
 
 artificial_sequences_1 <- read.fasta("artificial_dataset_1_1.fasta")
+artificial_sequences_1[[1]]
+artificial_sequences_2[[2]]
 taa_a1 <- c()
 tag_a1 <- c()
 tga_a1 <- c()
@@ -40,6 +42,7 @@ df_a1
 
 
 artificial_sequences_2 <- read.fasta("artificial_dataset_1_2.fasta")
+artificial_sequences_2
 taa_a2 <- c()
 tag_a2 <- c()
 tga_a2 <- c()
@@ -72,7 +75,12 @@ trans_matrix
 #install.packages("markovchain")
 library(markovchain)
 
-sequenceMatr <- createSequenceMatrix(sequence, sanitize = FALSE)
-sequences <- list(x = c("a", "b", "a"), y = c("b", "a", "b", "a", "c"))
-mcFitMle <- markovchainFit(sequences, method = "mle")
-mcFitMle
+mcFitMle_original <- markovchainFit(lizards_sequences, method = "mle")
+mcFitMle_original
+mcFitMle_a1 <- markovchainFit(artificial_sequences_1, method = "mle")
+mcFitMle_a1
+mcFitMle_a2 <- markovchainFit(artificial_sequences_2, method = "mle")
+mcFitMle_a2
+
+lizards_sequences[[1]]
+
