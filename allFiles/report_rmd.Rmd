@@ -2,7 +2,10 @@
 title: "Bioinformatics - Computer Lab 2"
 author: "Group 7: Phillip Hölscher (phiho267), Lennart Schilling (lensc874), Thijs Quast (thiqu264), Mariano Maquieira Mariani (marma330)"
 date: "20 November 2018"
-output: pdf_document
+output: 
+  pdf_document:
+  fig_width: 10
+  fig_height: 3
 ---
 
 ```{r setup, include=FALSE}
@@ -107,7 +110,7 @@ tree <- rtree(n = length(lizards_sequences))
 ```
 
 Here you can find the plot of the tree.
-```{r,echo=FALSE, eval=TRUE}
+```{r,echo=FALSE, eval=TRUE, out.width="300px"}
 plot(tree, edge.width = 2)
 ```
 
@@ -167,9 +170,9 @@ sequences_artificial[[k]][sequences_artificial[[k]] == "4"] = "t"
 
 The code for this can be found in Appendix 1.2
 
-The second simulate a artificial DNA sequence dataset do we save as *"artifical_dataset_1_2.fasta"*.
+The second simulate a artificial DNA sequence dataset do we save as *"artificial_dataset_1_2.fasta"*.
 ```{r, echo=TRUE, eval=TRUE}
-ape::write.dna(sequences_artificial, file ="artifical_dataset_1_2.fasta", format = "fasta", colsep = "", append =FALSE, nbcol = 6, colw = 10)
+ape::write.dna(sequences_artificial, file ="artificial_dataset_1_2.fasta", format = "fasta", colsep = "", append =FALSE, nbcol = 6, colw = 10)
 ```
 
 # Question 2
@@ -224,11 +227,22 @@ x <- kmer(string1)
 
 To allign the sequences for each dataset (the original dataset *lizards_sequences*, the first artificial dataset *artificial_dataset_1_1* and the second artificial dataset *artificial_dataset_1_2*), the *plsgenomics* package was used. The *.fasta*-files for the datasets were transformed to a *DNAStringSet* - class within R. The uncorrected distance matrices created represent the hamming distance between each of the sequences in each dataset. The results of these distance matrices are plotted as heatmaps (using *plsgenomics* package) :
 
-![sequence alligment for lizards_sequences](heatmap_lizards_sequences.png)
-![sequence alligment for artificial_dataset_1_1](heatmap_artificial_dataset_1_1.png)
-![sequence alligment for artificial_dataset_1_2](heatmap_artificial_dataset_1_2.png)
+lizards_sequences
+```{r, echo=FALSE, out.width = "200px"}
+knitr::include_graphics("heatmap_lizards_sequences.png")
+```
 
-We see that ...
+artificial_dataset_1_1
+```{r, echo=FALSE, out.width = "200px"}
+knitr::include_graphics("heatmap_artificial_dataset_1_1.png")
+```
+
+artificial_dataset_1_2
+```{r, echo=FALSE, out.width = "200px"}
+knitr::include_graphics("heatmap_artificial_dataset_1_2.png")
+```
+
+We see that for the original dataset, the allignment results are much better than for the artificial datasets. Based on the point that the artificial datasets were created by sampling randomly, the greater distances between the sequences compared to the distances within the original dataset make sense.
 
 The R code for this Question 2.3 can be found in Appendix 2.3.
 
@@ -315,7 +329,8 @@ get_artificial_sequence_dataset = function(original_dataset) {
         between original and artificial datasets (values rounded): ")
   print(comparison_base_compositions)
   # saving fasta file
-  ape::write.dna(artificial_dataset, file ="artificial_dataset_1_1.fasta", format = "fasta", colsep = "")
+  ape::write.dna(artificial_dataset, file ="artificial_dataset_1_1.fasta", format = "fasta", 
+                 colsep = "")
 }
 ```
 
@@ -347,8 +362,9 @@ library(ape)
 # getting all datasets in DNAStringSet format
 
   # original dataset
-    # readAAStringSet-function needs path of fasta file as input. The original dataset needs to be prepared and saved 
-    # so that the fasta file does not inlcude whitespaces anymore.
+    # readAAStringSet-function needs path of fasta file as input. The original 
+    # dataset needs to be prepared and saved so that the fasta file does not 
+    # inlcude whitespaces anymore.
       # reading original_dataset from fasta file 
       lizards_sequences = read.fasta("lizard_seqs.fasta")
       # preparing data in fasta file (dna sequences include emtpy spaces which will be removed)
@@ -356,7 +372,8 @@ library(ape)
         lizards_sequences[[i]] = lizards_sequences[[i]][lizards_sequences[[i]] != " "]
       }
       # saving prepared fasta file
-      ape::write.dna(lizards_sequences, file ="lizards_sequences_no_whitespaces.fasta", format = "fasta", colsep = "")
+      ape::write.dna(lizards_sequences, file ="lizards_sequences_no_whitespaces.fasta", 
+                     format = "fasta", colsep = "")
     # reading prepared fasta file as biostrings-object
     lizards_sequences = readDNAStringSet("lizards_sequences_no_whitespaces.fasta")
     
@@ -379,7 +396,10 @@ sequence_alligning = function(dataset, name) {
   return(sequences_alligned)
 }
 
-lizards_sequences_alligned = sequence_alligning(dataset = lizards_sequences, name = "lizards_sequences")
-artificial_dataset_1_1_alligned = sequence_alligning(artificial_dataset_1_1, name = "artificial_dataset_1_1")
-artificial_dataset_1_2_alligned = sequence_alligning(artificial_dataset_1_2, name = "artificial_dataset_1_2")
+lizards_sequences_alligned = sequence_alligning(dataset = lizards_sequences, 
+                                                name = "lizards_sequences")
+artificial_dataset_1_1_alligned = sequence_alligning(artificial_dataset_1_1, 
+                                                     name = "artificial_dataset_1_1")
+artificial_dataset_1_2_alligned = sequence_alligning(artificial_dataset_1_2, 
+                                                     name = "artificial_dataset_1_2")
 ```
