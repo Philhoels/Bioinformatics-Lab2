@@ -1,6 +1,6 @@
 ---
 title: "Bioinformatics - Computer Lab 2"
-author: "Group 7: Phillip Hölscher (phiho267), Lennart Schilling (lensc874), Thijs Quast (thiqu264), Mariano Maquieira Mariani (marma330)"
+author: "Group 7: Phillip H?lscher (phiho267), Lennart Schilling (lensc874), Thijs Quast (thiqu264), Mariano Maquieira Mariani (marma330)"
 date: "20 November 2018"
 output: 
   pdf_document:
@@ -220,6 +220,15 @@ library(rDNAse)
 string1 <- paste(lizards_sequences[[1]], collapse = "")
 string1 <- toupper(string1)
 x <- kmer(string1)
+```
+
+```{r}
+artificial_compositions_2 <- list()
+  for (i in 1:length(artificial_sequences_2)) {
+  string1 <- paste(artificial_sequences_2[[i]], collapse = "")
+  string1 <- toupper(string1)
+  artificial_compositions_2[[i]] <- kmer(string1)
+}
 ```
 
 
