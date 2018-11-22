@@ -5,7 +5,7 @@ library(DECIPHER)
 library(plsgenomics)
 library(ape)
 
-# getting all datasets
+# getting all datasets in DNAStringSet format
 
   # original dataset
     # readAAStringSet-function needs path of fasta file as input. The original dataset needs to be prepared and saved 
@@ -37,19 +37,13 @@ sequence_alligning = function(dataset, name) {
   heatmap_dm_sequences_alligned = matrix.heatmap(dm_sequences_alligned)
   dev.copy(png,paste("heatmap_", name, ".png", sep=""))
   dev.off()
+  return(sequences_alligned)
 }
 
-sequence_alligning(dataset = lizards_sequences, name = "lizards_sequences")
-sequence_alligning(artificial_dataset_1_1, name = "artificial_dataset_1_1")
-sequence_alligning(artificial_dataset_1_2, name = "artificial_dataset_1_2")
+lizards_sequences_alligned = sequence_alligning(dataset = lizards_sequences, name = "lizards_sequences")
+artificial_dataset_1_1_alligned = sequence_alligning(artificial_dataset_1_1, name = "artificial_dataset_1_1")
+artificial_dataset_1_2_alligned = sequence_alligning(artificial_dataset_1_2, name = "artificial_dataset_1_2")
 
-# QUESTION 3.1 #
-# using clustal omega Phylogenetic Tree data
-
-# original dataset
-
-
-
-tree = read.tree("C:/Users/Lennart/Desktop/phylotree.txt")
-tree
-plot(tree)
+# results for report saved in repository as 
+# heatmap_lizards_sequences, heatmap_artificial_dataset_1_1, heatmap_artificial_dataset_1_2
+# also extracts from the alligments (just print output of the function) can be included into the report
