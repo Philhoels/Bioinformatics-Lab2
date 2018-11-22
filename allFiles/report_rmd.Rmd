@@ -172,6 +172,44 @@ The second simulate a artificial DNA sequence dataset do we save as *"artifical_
 ape::write.dna(sequences_artificial, file ="artifical_dataset_1_2.fasta", format = "fasta", colsep = "", append =FALSE, nbcol = 6, colw = 10)
 ```
 
+# Question 2
+```{r}
+original_dataset <- lizards_sequences
+original_base_compositions <- list()
+artificial_1_base_compositions <- list()
+artificial_2_base_compositions <- list()
+for (i in 1:length(original_dataset)) {
+    # getting base compositions for each original sequence
+    original_base_compositions[[i]] = 
+      seqinr::count(original_dataset[[i]],1)/length(original_dataset[[i]])
+}
+
+for (i in 1:length(artificial_sequences_1)) {
+    # getting base compositions for each original sequence
+    artificial_1_base_compositions[[i]] = 
+      seqinr::count(artificial_sequences_1[[i]],1)/length(artificial_sequences_1[[i]])
+}
+
+for (i in 1:length(artificial_sequences_2)) {
+    # getting base compositions for each original sequence
+    artificial_2_base_compositions[[i]] = 
+      seqinr::count(artificial_sequences_2[[i]],1)/length(artificial_sequences_2[[i]])
+}
+```
+
+```{r}
+GC_composition <- GC(lizards_sequences[[1]])
+AT <- 1-GC_composition
+```
+
+```{r}
+Reduce('+', original_base_compositions)
+Reduce('+', artificial_1_base_compositions)
+Reduce('+', artificial_2_base_compositions)
+```
+
+
+
 ----------------------------------------------------------------------------------------------
 # Appendix 1
 
