@@ -35,7 +35,7 @@ get_artificial_sequence_dataset = function(original_dataset) {
   print("comparison of base compositions between original and artificial datasets (values rounded): ")
   print(comparison_base_compositions)
   # saving fasta file
-  ape::write.dna(artificial_dataset, file ="artificial_dataset_1_1.fasta", format = "fasta")
+  ape::write.dna(artificial_dataset, file ="artificial_dataset_1_1.fasta", format = "fasta", colsep = "")
 }
 
 # applying function to dataset of the RAG1 gene sequences from 33 lizard species

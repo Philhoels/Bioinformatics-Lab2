@@ -1,6 +1,6 @@
 ---
 title: "Bioinformatics - Computer Lab 2"
-author: "Group 7: Phillip Hölscher (phiho267), Lennart Schilling (lensc874), Thijs Quast (thiqu264), Mariano Maquieira Mariani (marma330)"
+author: "Group 7: Phillip H?lscher (phiho267), Lennart Schilling (lensc874), Thijs Quast (thiqu264), Mariano Maquieira Mariani (marma330)"
 date: "20 November 2018"
 output: pdf_document
 ---
@@ -8,6 +8,7 @@ output: pdf_document
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
+
 
 # Question 1
 ```{r, echo=FALSE, eval=TRUE}
@@ -89,6 +90,90 @@ get_artificial_sequence_dataset = function(original_dataset) {
 It becomes clear that the base compositions are very similar. 
 The entire code for the function can be seen in Appendix 1.1 (Function code).
 
+
+# Question 1.2
+
+```{r, echo=FALSE, eval=TRUE}
+#the library we need for this exercise
+library(ape)
+library(seqinr)
+library(phangorn)
+```
+
+In this part of the exercise do we use the prepared data from part 1, in  Appendix 1 code can be found in  (Data Import of original dataset).
+
+We used the function *rtree* to create a tree object of the type phylo and the length of the original sequences.
+```{r, echo=TRUE, eval=TRUE}
+tree <- rtree(n = length(lizards_sequences))
+```
+Here you can find the plot of the tree.
+```{r,echo=FALSE, eval=TRUE}
+plot(tree, edge.width = 2)
+```
+
+After the simulation of the phylogenetic tree, we had to simulate the sequence. 
+
+For this, we the had several things to do. 
+1. We simulated a transition rate matrix (Q-Matrix). 
+In this case we choose one by yourself. 
+
+```{r,echo=FALSE, eval=TRUE}
+transition_matrix <- matrix(0.25, ncol = 4, nrow = 4)
+rownames(transition_matrix) <- c("a", "c", "t", "g")
+colnames(transition_matrix) <- c("a", "c", "t", "g")
+```
+
+```{r, echo=FALSE, eval=TRUE}
+transition_matrix
+```
+
+2. We had to choose the length of the sequence. 
+To make it comparable with the original lizards dataset, we decided to create 
+
+```{r, echo=TRUE, eval=TRUE}
+lengths <- c()
+for (i in 1:33){
+lengths <- c(lengths, length(lizards_sequences[[i]]))
+}
+```
+
+Now we can use the simulate the sequences by using the function *phangorn::simSeq()*. 
+
+```{r, echo=TRUE, eval=TRUE ,warning=FALSE}
+sequences_artificial <- li
+st()
+for (j in 1:33){
+sequences_artificial[j] <- simSeq(tree, l = lengths[j], Q=transition_matrix , type = "DNA")
+}
+```
+
+Since in sequences are filled with integers from 1 to 4, do we have to replace the numbers by the letters a,b,c,d.
+
+1 = a 
+
+2 = b
+
+3 = c
+
+4 = d
+
+```{r,echo=FALSE, eval=TRUE}
+for (k in 1:33){
+sequences_artificial[[k]][sequences_artificial[[k]] == 1] = "a"
+sequences_artificial[[k]][sequences_artificial[[k]] == "2"] = "c"
+sequences_artificial[[k]][sequences_artificial[[k]] == "3"] = "g"
+sequences_artificial[[k]][sequences_artificial[[k]] == "4"] = "t"
+}
+```
+
+The code for this can be found in Appendix 1.2
+
+The second simulate a artificial DNA sequence dataset do we save as *"artifical_dataset_1_2.fasta"*.
+```{r, echo=TRUE, eval=TRUE}
+ape::write.dna(sequences_artificial, file ="artifical_dataset_1_2.fasta", format = "fasta", colsep = "", append =FALSE, nbcol = 6, colsep = " ", colw = 10)
+```
+
+----------------------------------------------------------------------------------------------
 # Appendix 1
 
 Data Import of original dataset
@@ -175,5 +260,13 @@ get_artificial_sequence_dataset = function(original_dataset) {
 }
 ```
 
-
+## Appendix 1.2
+Replace the integers by letters
+```{r,echo=TRUE, eval=FALSE}
+for (k in 1:33){
+sequences_artificial[[k]][sequences_artificial[[k]] == 1] = "a"
+sequences_artificial[[k]][sequences_artificial[[k]] == "2"] = "c"
+sequences_artificial[[k]][sequences_artificial[[k]] == "3"] = "g"
+sequences_artificial[[k]][sequences_artificial[[k]] == "4"] = "t"
+}
 

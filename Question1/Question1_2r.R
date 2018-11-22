@@ -38,6 +38,6 @@ sequences_artificial[[k]][sequences_artificial[[k]] == "4"] = "t"
 }
 
   
-ape::write.dna(sequences_artificial, file ="artificial_dataset_1_2.fasta", format = "fasta", append =FALSE, nbcol = 6, colsep = " ", colw = 10)
+ape::write.dna(sequences_artificial, file ="artificial_dataset_1_2.fasta", format = "fasta", colsep = "")
 
 
