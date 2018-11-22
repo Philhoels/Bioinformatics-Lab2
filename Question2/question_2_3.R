@@ -19,10 +19,10 @@ library(plsgenomics)
     lizards_sequences = readDNAStringSet("lizards_sequences_no_whitespaces.fasta")
     
   # artificial_dataset_1_1
-  artificial_dataset_1_1 = read.fasta("artificial_dataset_1_1.fasta")
+  artificial_dataset_1_1 = readDNAStringSet("artificial_dataset_1_1.fasta")
     
   # artificial_dataset_1_2
-  artificial_dataset_1_2 = read.fasta("artificial_dataset_1_2.fasta")
+  artificial_dataset_1_2 = readDNAStringSet("artificial_dataset_1_2.fasta")
   
 # alligning sequences for each dataset
 sequence_alligning = function(dataset, name) {
@@ -39,9 +39,3 @@ sequence_alligning = function(dataset, name) {
 sequence_alligning(dataset = lizards_sequences, name = "lizards_sequences")
 sequence_alligning(artificial_dataset_1_1, name = "artificial_dataset_1_1")
 sequence_alligning(artificial_dataset_1_2, name = "artificial_dataset_1_2")
-
-
-
-
-# clustal_results = read.alignment(file = "C:/Users/Lennart/Desktop/clustalo-I20181122-163820-0599-46068815-p2m.clustal_num",
-#                format = "clustal")
