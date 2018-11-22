@@ -174,7 +174,10 @@ ape::write.dna(sequences_artificial, file ="artifical_dataset_1_2.fasta", format
 
 # Question 2
 ```{r}
+lizards_sequences = read.fasta("lizard_seqs.fasta")
 original_dataset <- lizards_sequences
+artificial_sequences_1 <- read.fasta("artificial_dataset_1_1.fasta")
+artificial_sequences_2 <- read.fasta("artificial_dataset_1_2.fasta")
 original_base_compositions <- list()
 artificial_1_base_compositions <- list()
 artificial_2_base_compositions <- list()
@@ -198,14 +201,22 @@ for (i in 1:length(artificial_sequences_2)) {
 ```
 
 ```{r}
+Reduce('+', original_base_compositions)
+Reduce('+', artificial_1_base_compositions)
+Reduce('+', artificial_2_base_compositions)
+```
+
+```{r}
+#install.packages("rDNAse")
 GC_composition <- GC(lizards_sequences[[1]])
 AT <- 1-GC_composition
 ```
 
 ```{r}
-Reduce('+', original_base_compositions)
-Reduce('+', artificial_1_base_compositions)
-Reduce('+', artificial_2_base_compositions)
+library(rDNAse)
+string1 <- paste(lizards_sequences[[1]], collapse = "")
+string1 <- toupper(string1)
+x <- kmer(string1)
 ```
 
 
