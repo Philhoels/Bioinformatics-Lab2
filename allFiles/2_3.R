@@ -46,4 +46,4 @@ artificial_dataset_1_2_alligned = sequence_alligning(artificial_dataset_1_2, nam
 
 # results for report saved in repository as 
 # heatmap_lizards_sequences, heatmap_artificial_dataset_1_1, heatmap_artificial_dataset_1_2
-# also extracts from the alligments (just print output of the function) can be includet into the report
+# also extracts from the alligments (just print output of the function) can be included into the report
