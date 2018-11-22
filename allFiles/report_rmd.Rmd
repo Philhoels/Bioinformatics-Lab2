@@ -1,6 +1,6 @@
 ---
 title: "Bioinformatics - Computer Lab 2"
-author: "Group 7: Phillip H?lscher (phiho267), Lennart Schilling (lensc874), Thijs Quast (thiqu264), Mariano Maquieira Mariani (marma330)"
+author: "Group 7: Phillip Hölscher (phiho267), Lennart Schilling (lensc874), Thijs Quast (thiqu264), Mariano Maquieira Mariani (marma330)"
 date: "20 November 2018"
 output: pdf_document
 ---
@@ -9,8 +9,8 @@ output: pdf_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-
 # Question 1
+
 ```{r, echo=FALSE, eval=TRUE}
 library(seqinr)
 ```
@@ -94,7 +94,6 @@ The entire code for the function can be seen in Appendix 1.1 (Function code).
 # Question 1.2
 
 ```{r, echo=FALSE, eval=TRUE}
-#the library we need for this exercise
 library(ape)
 library(seqinr)
 library(phangorn)
@@ -106,6 +105,7 @@ We used the function *rtree* to create a tree object of the type phylo and the l
 ```{r, echo=TRUE, eval=TRUE}
 tree <- rtree(n = length(lizards_sequences))
 ```
+
 Here you can find the plot of the tree.
 ```{r,echo=FALSE, eval=TRUE}
 plot(tree, edge.width = 2)
