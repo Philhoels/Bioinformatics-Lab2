@@ -1,6 +1,6 @@
 ---
 title: "Bioinformatics - Computer Lab 2"
-author: "Group 7: Phillip H?lscher (phiho267), Lennart Schilling (lensc874), Thijs Quast (thiqu264), Mariano Maquieira Mariani (marma330)"
+author: "Group 7: Lennart Schilling (lensc874), Thijs Quast (thiqu264), Mariano Maquieira Mariani (marma330)"
 date: "20 November 2018"
 output: 
   pdf_document:
@@ -176,6 +176,7 @@ ape::write.dna(sequences_artificial, file ="artificial_dataset_1_2.fasta", forma
 ```
 
 # Question 2
+# Question 2.1
 ```{r}
 lizards_sequences = read.fasta("lizard_seqs.fasta")
 original_dataset <- lizards_sequences
@@ -208,18 +209,24 @@ Reduce('+', original_base_compositions)
 Reduce('+', artificial_1_base_compositions)
 Reduce('+', artificial_2_base_compositions)
 ```
-
-```{r}
-#install.packages("rDNAse")
-GC_composition <- GC(lizards_sequences[[1]])
-AT <- 1-GC_composition
-```
-
 ```{r}
 library(rDNAse)
-string1 <- paste(lizards_sequences[[1]], collapse = "")
-string1 <- toupper(string1)
-x <- kmer(string1)
+original_compositions <- list()
+  for (i in 1:length(lizards_sequences)) {
+  string1 <- paste(lizards_sequences[[i]], collapse = "")
+  string1 <- toupper(string1)
+  original_compositions[[i]] <- kmer(string1)
+}
+```
+
+
+```{r}
+artificial_compositions_1 <- list()
+  for (i in 1:length(artificial_sequences_1)) {
+  string1 <- paste(artificial_sequences_1[[i]], collapse = "")
+  string1 <- toupper(string1)
+  artificial_compositions_1[[i]] <- kmer(string1)
+}
 ```
 
 ```{r}
@@ -229,6 +236,85 @@ artificial_compositions_2 <- list()
   string1 <- toupper(string1)
   artificial_compositions_2[[i]] <- kmer(string1)
 }
+```
+
+```{r}
+Reduce('+', original_compositions)
+Reduce('+', artificial_compositions_1)
+Reduce('+', artificial_compositions_2)
+```
+
+```{r}
+# Protein sequences
+protein_original <- read.fasta("lizard_protein.fasta")
+protein_artificial_1 <- read.fasta("artificial_1_protein.fasta")
+protein_artificial_2 <- read.fasta("artificial_2_protein.fasta")
+```
+
+```{r}
+library(protr)
+original_aac <- list()
+for (i in 1:length(protein_original)) {
+string1 <- paste(protein_original[[i]], collapse = "")
+string1 <- toupper(string1)
+string1 <- gsub(pattern = "[*]", replacement = "", x = string1)
+string1 <- gsub(pattern = "B", replacement = "", x = string1)
+string1 <- gsub(pattern = "J", replacement = "", x = string1)
+string1 <- gsub(pattern = "O", replacement = "", x = string1)
+string1 <- gsub(pattern = "U", replacement = "", x = string1)
+string1 <- gsub(pattern = "X", replacement = "", x = string1)
+string1 <- gsub(pattern = "Z", replacement = "", x = string1)
+original_aac[[i]] <- extractAAC(string1)
+}
+
+```
+
+```{r}
+library(protr)
+artificial_1_aac <- list()
+for (i in 1:length(protein_artificial_1)) {
+string1 <- paste(protein_artificial_1[[i]], collapse = "")
+string1 <- toupper(string1)
+string1 <- gsub(pattern = "[*]", replacement = "", x = string1)
+string1 <- gsub(pattern = "B", replacement = "", x = string1)
+string1 <- gsub(pattern = "J", replacement = "", x = string1)
+string1 <- gsub(pattern = "O", replacement = "", x = string1)
+string1 <- gsub(pattern = "U", replacement = "", x = string1)
+string1 <- gsub(pattern = "X", replacement = "", x = string1)
+string1 <- gsub(pattern = "Z", replacement = "", x = string1)
+artificial_1_aac[[i]] <- extractAAC(string1)
+}
+```
+
+```{r}
+library(protr)
+artificial_2_aac <- list()
+for (i in 1:length(protein_artificial_2)) {
+string1 <- paste(protein_artificial_2[[i]], collapse = "")
+string1 <- toupper(string1)
+string1 <- gsub(pattern = "[*]", replacement = "", x = string1)
+string1 <- gsub(pattern = "B", replacement = "", x = string1)
+string1 <- gsub(pattern = "J", replacement = "", x = string1)
+string1 <- gsub(pattern = "O", replacement = "", x = string1)
+string1 <- gsub(pattern = "U", replacement = "", x = string1)
+string1 <- gsub(pattern = "X", replacement = "", x = string1)
+string1 <- gsub(pattern = "Z", replacement = "", x = string1)
+artificial_2_aac[[i]] <- extractAAC(string1)
+}
+```
+
+
+
+# Question 2.2
+
+```{r}
+library(markovchain)
+mcFitMle_original <- markovchainFit(lizards_sequences, method = "mle")
+mcFitMle_original
+mcFitMle_a1 <- markovchainFit(artificial_sequences_1, method = "mle")
+mcFitMle_a1
+mcFitMle_a2 <- markovchainFit(artificial_sequences_2, method = "mle")
+mcFitMle_a2
 ```
 
 

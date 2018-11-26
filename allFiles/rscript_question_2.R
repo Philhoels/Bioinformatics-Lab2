@@ -79,14 +79,12 @@ colnames(trans_matrix) <- c("a", "c", "g", "t")
 trans_matrix
 
 #install.packages("markovchain")
-library(markovchain)
 
+library(markovchain)
 mcFitMle_original <- markovchainFit(lizards_sequences, method = "mle")
 mcFitMle_original
 mcFitMle_a1 <- markovchainFit(artificial_sequences_1, method = "mle")
 mcFitMle_a1
 mcFitMle_a2 <- markovchainFit(artificial_sequences_2, method = "mle")
 mcFitMle_a2
-
-lizards_sequences[[1]]
 
