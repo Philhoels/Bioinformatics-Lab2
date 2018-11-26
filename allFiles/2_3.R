@@ -33,6 +33,7 @@ sequence_alligning = function(dataset, name) {
   sequences_alligned = AlignSeqs(dataset)
   # creating distance matrix
   dm_sequences_alligned = DistanceMatrix(sequences_alligned)
+  saveRDS(dm_sequences_alligned, paste0("distanceMatrix_", name, ".RDS"))
   # creating matrix heatmap
   heatmap_dm_sequences_alligned = matrix.heatmap(dm_sequences_alligned)
   dev.copy(png,paste("heatmap_", name, ".png", sep=""))
