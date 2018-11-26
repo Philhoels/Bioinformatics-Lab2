@@ -303,8 +303,6 @@ artificial_2_aac[[i]] <- extractAAC(string1)
 }
 ```
 
-
-
 # Question 2.2
 
 ```{r}
