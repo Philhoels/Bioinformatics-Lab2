@@ -188,19 +188,19 @@ artificial_2_base_compositions <- list()
 for (i in 1:length(original_dataset)) {
     # getting base compositions for each original sequence
     original_base_compositions[[i]] = 
-      seqinr::count(original_dataset[[i]],1)/length(original_dataset[[i]])
+      seqinr::count(original_dataset[[i]],1)
 }
 
 for (i in 1:length(artificial_sequences_1)) {
     # getting base compositions for each original sequence
     artificial_1_base_compositions[[i]] = 
-      seqinr::count(artificial_sequences_1[[i]],1)/length(artificial_sequences_1[[i]])
+      seqinr::count(artificial_sequences_1[[i]],1)
 }
 
 for (i in 1:length(artificial_sequences_2)) {
     # getting base compositions for each original sequence
     artificial_2_base_compositions[[i]] = 
-      seqinr::count(artificial_sequences_2[[i]],1)/length(artificial_sequences_2[[i]])
+      seqinr::count(artificial_sequences_2[[i]],1)
 }
 ```
 
@@ -302,6 +302,95 @@ string1 <- gsub(pattern = "Z", replacement = "", x = string1)
 artificial_2_aac[[i]] <- extractAAC(string1)
 }
 ```
+
+```{r}
+original_aac
+artificial_1_aac
+artificial_2_aac
+```
+
+```{r}
+Reduce('+', original_aac)/length(original_aac)
+Reduce('+', artificial_1_aac)/length(artificial_1_aac)
+Reduce('+', artificial_2_aac)/length(artificial_2_aac)
+```
+
+```{r}
+# Question 2
+# 2.1 
+library(seqinr)
+library(stringr)
+
+# reading original_dataset from fasta file 
+lizards_sequences = read.fasta("lizard_seqs.fasta")
+# preparing data in fasta file (dna sequences include emtpy spaces which will be removed)
+for (i in 1:length(lizards_sequences)) {
+  lizards_sequences[[i]] = lizards_sequences[[i]][lizards_sequences[[i]] != " "]
+}
+taa_count <- c()
+tag_count <- c()
+tga_count <- c()
+
+for (i in 1:33){
+string <- lizards_sequences[[i]]
+string <- paste(lizards_sequences[[i]], collapse = "")
+taa_count[i] <-str_count(string, pattern = "taa")
+tag_count[i] <- str_count(string, pattern = "tag")
+tga_count[i] <- str_count(string, pattern = "tga")
+}
+
+names_sequences <- names(lizards_sequences)
+df_original <- as.data.frame(cbind(names_sequences, taa_count, tag_count, tga_count, total_count_1 = taa_count + tag_count + tga_count))
+df_original
+
+artificial_sequences_1 <- read.fasta("artificial_dataset_1_1.fasta")
+artificial_sequences_1[[1]]
+artificial_sequences_2[[2]]
+taa_a1 <- c()
+tag_a1 <- c()
+tga_a1 <- c()
+
+
+for (i in 1:33){
+  string <- artificial_sequences_1[[i]]
+  string <- paste(artificial_sequences_1[[i]], collapse = "")
+  taa_a1[i] <-str_count(string, pattern = "taa")
+  tag_a1[i] <- str_count(string, pattern = "tag")
+  tga_a1[i] <- str_count(string, pattern = "tga")
+}
+
+names_a1 <- names(artificial_sequences_1)
+
+df_a1 <- as.data.frame(cbind(names_a1, taa_a1, tag_a1, tga_a1, total_count_2 = taa_a1 + tag_a1 + tga_a1))
+df_a1
+
+
+artificial_sequences_2 <- read.fasta("artificial_dataset_1_2.fasta")
+artificial_sequences_2
+taa_a2 <- c()
+tag_a2 <- c()
+tga_a2 <- c()
+
+
+for (i in 1:33){
+  string <- artificial_sequences_2[[i]]
+  string <- paste(artificial_sequences_2[[i]], collapse = "")
+  taa_a2[i] <-str_count(string, pattern = "taa")
+  tag_a2[i] <- str_count(string, pattern = "tag")
+  tga_a2[i] <- str_count(string, pattern = "tga")
+}
+
+names_a2 <- names(artificial_sequences_1)
+
+df_a2 <- as.data.frame(cbind(names_a2, taa_a2, tag_a2, tga_a2, total_count_3 = taa_a2 + tag_a2 + tga_a2))
+df_a2
+
+df_all <- as.data.frame(cbind(df_a1, df_a2))
+df_all
+
+```
+
+
 
 # Question 2.2
 
