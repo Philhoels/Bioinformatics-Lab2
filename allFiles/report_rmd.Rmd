@@ -206,9 +206,20 @@ for (i in 1:length(artificial_sequences_2)) {
 
 ```{r}
 Reduce('+', original_base_compositions)
+sum(Reduce('+', original_base_compositions))
+Reduce('+', original_base_compositions)/sum(Reduce('+', original_base_compositions))
+
 Reduce('+', artificial_1_base_compositions)
+sum(Reduce('+', artificial_1_base_compositions))
+Reduce('+', artificial_1_base_compositions)/sum(Reduce('+', artificial_1_base_compositions))
+
 Reduce('+', artificial_2_base_compositions)
+sum(Reduce('+', artificial_2_base_compositions))
+Reduce('+', artificial_2_base_compositions)/sum(Reduce('+', artificial_2_base_compositions))
 ```
+
+The original dataset and the first artificially created dataset are rather similar in their distributions for A, C, T and G's. However, the second artificially created dataset has a slightly different distribution. This final dataset has almost uniform distribution for A, C, T and G's, they all occur with an average frequency of approximately 25%.
+
 ```{r}
 library(rDNAse)
 original_compositions <- list()
@@ -243,6 +254,7 @@ Reduce('+', original_compositions)
 Reduce('+', artificial_compositions_1)
 Reduce('+', artificial_compositions_2)
 ```
+GC content is the largest for the second artificially created dataset. CG content is largest for the second artificially created dataset. AT content is largest in the original dataset.
 
 ```{r}
 # Protein sequences
@@ -314,10 +326,9 @@ Reduce('+', original_aac)/length(original_aac)
 Reduce('+', artificial_1_aac)/length(artificial_1_aac)
 Reduce('+', artificial_2_aac)/length(artificial_2_aac)
 ```
+After removing some unwanted letters and characters, the observed amino acids remain for the obtained protein sequences. Distribution of the amino acids among the three databases of obtained protein sequences is rather similar for all three protein databases.
 
 ```{r}
-# Question 2
-# 2.1 
 library(seqinr)
 library(stringr)
 
@@ -387,10 +398,8 @@ df_a2
 
 df_all <- as.data.frame(cbind(df_a1, df_a2))
 df_all
-
 ```
-
-
+Interpreting stop codons as either "taa", "tag" or "tga" results in many stop codons for each sequence. In the original dataset this is highly unlikely, as a natural translation starts at a start codon and then continues until it reaches a stop codon. Or if it does not reach a stop codon at all.
 
 # Question 2.2
 
@@ -403,7 +412,7 @@ mcFitMle_a1
 mcFitMle_a2 <- markovchainFit(artificial_sequences_2, method = "mle")
 mcFitMle_a2
 ```
-
+We fitted a first order markov model on all sequences.
 
 # Question 2.3
 
