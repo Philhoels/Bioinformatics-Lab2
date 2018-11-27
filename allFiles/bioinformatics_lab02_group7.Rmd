@@ -1,7 +1,7 @@
 ---
 title: "Bioinformatics - Computer Lab 2"
 author: "Group 7: Lennart Schilling (lensc874), Thijs Quast (thiqu264), Mariano Maquieira Mariani (marma330)"
-date: "20 November 2018"
+date: "27 November 2018"
 output: 
   pdf_document:
   fig_width: 10
@@ -93,10 +93,9 @@ get_artificial_sequence_dataset = function(original_dataset) {
 It becomes clear that the base compositions are very similar. 
 The entire code for the function can be seen in Appendix 1.1 (Function code).
 
-
 # Question 1.2
 
-```{r, echo=FALSE, eval=TRUE}
+```{r, echo=FALSE, eval=TRUE, message=FALSE}
 library(ape)
 library(seqinr)
 library(phangorn)
@@ -176,6 +175,7 @@ ape::write.dna(sequences_artificial, file ="artificial_dataset_1_2.fasta", forma
 ```
 
 # Question 2
+
 # Question 2.1
 ```{r}
 lizards_sequences = read.fasta("lizard_seqs.fasta")
@@ -263,7 +263,7 @@ protein_artificial_1 <- read.fasta("artificial_1_protein.fasta")
 protein_artificial_2 <- read.fasta("artificial_2_protein.fasta")
 ```
 
-```{r}
+```{r, message=FALSE}
 library(protr)
 original_aac <- list()
 for (i in 1:length(protein_original)) {
@@ -282,7 +282,6 @@ original_aac[[i]] <- extractAAC(string1)
 ```
 
 ```{r}
-library(protr)
 artificial_1_aac <- list()
 for (i in 1:length(protein_artificial_1)) {
 string1 <- paste(protein_artificial_1[[i]], collapse = "")
@@ -299,7 +298,6 @@ artificial_1_aac[[i]] <- extractAAC(string1)
 ```
 
 ```{r}
-library(protr)
 artificial_2_aac <- list()
 for (i in 1:length(protein_artificial_2)) {
 string1 <- paste(protein_artificial_2[[i]], collapse = "")
@@ -313,12 +311,6 @@ string1 <- gsub(pattern = "X", replacement = "", x = string1)
 string1 <- gsub(pattern = "Z", replacement = "", x = string1)
 artificial_2_aac[[i]] <- extractAAC(string1)
 }
-```
-
-```{r}
-original_aac
-artificial_1_aac
-artificial_2_aac
 ```
 
 ```{r}
@@ -351,17 +343,13 @@ tga_count[i] <- str_count(string, pattern = "tga")
 }
 
 names_sequences <- names(lizards_sequences)
-df_original <- as.data.frame(cbind(names_sequences, taa_count, tag_count, tga_count, total_count_1 = taa_count + tag_count + tga_count))
-df_original
+df_original <- as.data.frame(cbind(names_sequences, taa_count, tag_count, tga_count, 
+                                   total_count_1 = taa_count + tag_count + tga_count))
 
 artificial_sequences_1 <- read.fasta("artificial_dataset_1_1.fasta")
-artificial_sequences_1[[1]]
-artificial_sequences_2[[2]]
 taa_a1 <- c()
 tag_a1 <- c()
 tga_a1 <- c()
-
-
 for (i in 1:33){
   string <- artificial_sequences_1[[i]]
   string <- paste(artificial_sequences_1[[i]], collapse = "")
@@ -372,16 +360,13 @@ for (i in 1:33){
 
 names_a1 <- names(artificial_sequences_1)
 
-df_a1 <- as.data.frame(cbind(names_a1, taa_a1, tag_a1, tga_a1, total_count_2 = taa_a1 + tag_a1 + tga_a1))
-df_a1
-
+df_a1 <- as.data.frame(cbind(names_a1, taa_a1, tag_a1, tga_a1, total_count_2 = 
+                               taa_a1 + tag_a1 + tga_a1))
 
 artificial_sequences_2 <- read.fasta("artificial_dataset_1_2.fasta")
-artificial_sequences_2
 taa_a2 <- c()
 tag_a2 <- c()
 tga_a2 <- c()
-
 
 for (i in 1:33){
   string <- artificial_sequences_2[[i]]
@@ -393,8 +378,8 @@ for (i in 1:33){
 
 names_a2 <- names(artificial_sequences_1)
 
-df_a2 <- as.data.frame(cbind(names_a2, taa_a2, tag_a2, tga_a2, total_count_3 = taa_a2 + tag_a2 + tga_a2))
-df_a2
+df_a2 <- as.data.frame(cbind(names_a2, taa_a2, tag_a2, tga_a2, total_count_3 = 
+                               taa_a2 + tag_a2 + tga_a2))
 
 df_all <- as.data.frame(cbind(df_a1, df_a2))
 df_all
@@ -403,7 +388,7 @@ Interpreting stop codons as either "taa", "tag" or "tga" results in many stop co
 
 # Question 2.2
 
-```{r}
+```{r, message=FALSE}
 library(markovchain)
 mcFitMle_original <- markovchainFit(lizards_sequences, method = "mle")
 mcFitMle_original
@@ -412,7 +397,9 @@ mcFitMle_a1
 mcFitMle_a2 <- markovchainFit(artificial_sequences_2, method = "mle")
 mcFitMle_a2
 ```
-We fitted a first order markov model on all sequences.
+We fitted a first order markov model on all sequences. Our assumption in our simulated datasets is that in the sequence the occurence of a nucleotide does not depend on the rest of the sequence.
+This violates the limited horizon: which is that the probability of being in a state at time t depends only on the state at time t minus 1. 
+We used sample {base}	function, which obviously samples without taking into account past states.
 
 # Question 2.3
 
@@ -436,6 +423,89 @@ knitr::include_graphics("heatmap_artificial_dataset_1_2.png")
 We see that for the original dataset, the allignment results are much better than for the artificial datasets. Based on the point that the artificial datasets were created by sampling randomly, the greater distances between the sequences compared to the distances within the original dataset make sense.
 
 The R code for this Question 2.3 can be found in Appendix 2.3.
+
+# Question 3
+
+## Question 3.1
+Using the created distance matrix for each dataset (the original dataset *lizards_sequences*, the first artificial dataset *artificial_dataset_1_1* and the second artificial dataset *artificial_dataset_1_2*) with the aligned sequences, phylotrees were created. On top of that, a phylogenetic bootstrap analysis was performed. As a result, the bootstrap supports for the individual clades were integrated into the phylotrees. 
+
+```{r,echo=FALSE, eval=TRUE, message=FALSE}
+library(seqinr)
+library(DECIPHER)
+library(plsgenomics)
+library(ape)
+
+# creating phylotrees
+create_phylotree = function(dataset_name) {
+  distanceMatrix = readRDS(paste0("distanceMatrix_", dataset_name, ".RDS"))
+  tree = nj(distanceMatrix)
+  png(paste("phylotree_", dataset_name, ".png", sep=""))
+  plot(tree)
+  dev.off()
+  return(tree)
+}
+tree_lizards_sequences = create_phylotree("lizards_sequences")
+tree_artificial_dataset_1_1 = create_phylotree("artificial_dataset_1_1")
+tree_artificial_dataset_1_2 = create_phylotree("artificial_dataset_1_2")
+```
+
+lizards_sequences
+```{r, echo=FALSE, out.width = "200px"}
+knitr::include_graphics("bootstrap_phylotree_lizards_sequences.png")
+```
+
+artificial_dataset_1_1
+```{r, echo=FALSE, out.width = "200px"}
+knitr::include_graphics("bootstrap_phylotree_artificial_dataset_1_1.png")
+```
+
+artificial_dataset_1_2
+```{r, echo=FALSE, out.width = "200px"}
+knitr::include_graphics("bootstrap_phylotree_artificial_dataset_1_2.png")
+```
+
+The R code for the creation of the phylotrees and the bootstrap analysis can be found in Appendix 3.1.
+
+## Question 3.2
+
+Different general characteristics can be comprared between phylogenetic trees, e.g.:
+
+- number of tips
+- different tips
+- number of nodes
+
+On top of that, different quantitative distances can be calculated, e.g.:
+
+- symmetric difference
+- branch score
+
+The distances can be only calculated if the tips are named equally. Since the artificial datasets (*artificial_dataset_1_1* and *artificial_dataset_1_2*) are not named as the original dataset (*lizard_sequences*), the distance measurements could be only processed for the comparison between the artficial datasets.
+
+```{r, echo=FALSE, eval=TRUE}
+library(phangorn)
+compare_phylotrees = function(phylotree1, phylotree2) {
+  if(all(phylotree1$tip.label == phylotree2$tip.label)) {
+    comparePhylo(phylotree1, phylotree2)
+    treedist(phylotree1, phylotree2)
+  } else {
+    comparePhylo(phylotree1, phylotree2)
+  }
+}
+```
+
+```{r, echo=FALSE, eval=TRUE}
+compare_phylotrees(tree_lizards_sequences, tree_artificial_dataset_1_1)
+```
+
+```{r, echo=FALSE, eval=TRUE}
+# Comparing tree_lizards_sequences & tree_artificial_dataset_1_2
+compare_phylotrees(tree_lizards_sequences, tree_artificial_dataset_1_2)
+```
+
+```{r, echo=FALSE, eval=TRUE}
+# Comparing tree_artificial_dataset_1_1 & tree_artificial_dataset_1_2
+compare_phylotrees(tree_artificial_dataset_1_1, tree_artificial_dataset_1_2)
+```
 
 ----------------------------------------------------------------------------------------------
 # Appendix 1
@@ -538,10 +608,6 @@ sequences_artificial[[k]][sequences_artificial[[k]] == "4"] = "t"
 
 # Appendix 2
 
-## Appendix 2.1
-
-## Appendix 2.2
-
 ## Appendix 2.3
 
 ```{r,echo=TRUE, eval=FALSE}
@@ -593,4 +659,64 @@ artificial_dataset_1_1_alligned = sequence_alligning(artificial_dataset_1_1,
                                                      name = "artificial_dataset_1_1")
 artificial_dataset_1_2_alligned = sequence_alligning(artificial_dataset_1_2, 
                                                      name = "artificial_dataset_1_2")
+```
+
+# Appendix 3
+
+## Appendix 3.1
+```{r,echo=TRUE, eval=FALSE}
+library(seqinr)
+library(DECIPHER)
+library(plsgenomics)
+library(ape)
+
+# creating phylotrees
+create_phylotree = function(dataset_name) {
+  distanceMatrix = readRDS(paste0("distanceMatrix_", dataset_name, ".RDS"))
+  tree = nj(distanceMatrix)
+  png(paste("phylotree_", dataset_name, ".png", sep=""))
+  plot(tree)
+  dev.off()
+  return(tree)
+}
+tree_lizards_sequences = create_phylotree("lizards_sequences")
+tree_artificial_dataset_1_1 = create_phylotree("artificial_dataset_1_1")
+tree_artificial_dataset_1_2 = create_phylotree("artificial_dataset_1_2")
+
+# performing bootstrap analysis
+bootstrap_analysis = function(dataset_name, tree_object) {
+  distanceMatrix = readRDS(paste0("distanceMatrix_", dataset_name, ".RDS"))
+  bootstrap_result = boot.phylo(phy = tree_object,
+                                x = distanceMatrix,
+                                FUN = function(x) {
+                                  nj(x)
+                                })
+  png(paste("bootstrap_phylotree_", dataset_name, ".png", sep=""))
+  plot(tree_object)
+  nodelabels(bootstrap_result, cex=.6)
+  dev.off()
+}
+bootstrap_analysis("lizards_sequences", tree_lizards_sequences)
+bootstrap_analysis("artificial_dataset_1_1", tree_artificial_dataset_1_1)
+bootstrap_analysis("artificial_dataset_1_2", tree_artificial_dataset_1_2)
+```
+
+## Appendix 3.2
+
+```{r,echo=TRUE, eval=FALSE}
+library(phangorn)
+compare_phylotrees = function(phylotree1, phylotree2) {
+  if(all(phylotree1$tip.label == phylotree2$tip.label)) {
+    comparePhylo(phylotree1, phylotree2)
+    treedist(phylotree1, phylotree2)
+  } else {
+    comparePhylo(phylotree1, phylotree2)
+  }
+}
+# Comparing tree_lizards_sequences & tree_artificial_dataset_1_1
+compare_phylotrees(tree_lizards_sequences, tree_artificial_dataset_1_1)
+# Comparing tree_lizards_sequences & tree_artificial_dataset_1_2
+compare_phylotrees(tree_lizards_sequences, tree_artificial_dataset_1_2)
+# Comparing tree_artificial_dataset_1_1 & tree_artificial_dataset_1_2
+compare_phylotrees(tree_artificial_dataset_1_1, tree_artificial_dataset_1_2)
 ```
