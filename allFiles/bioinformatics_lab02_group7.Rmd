@@ -118,27 +118,21 @@ rownames(transition_matrix) <- c("a", "c", "t", "g")
 colnames(transition_matrix) <- c("a", "c", "t", "g")
 ```
 
-```{r, echo=FALSE, eval=TRUE}
-transition_matrix
-```
-
-2. We had to choose the length of the sequence. 
-To make it comparable with the original lizards dataset, we decided to create 
+2. We had to choose the lengths of the sequences. We chose the average length of the origianl sequences and used this length for every artificial sequence.
 
 ```{r, echo=TRUE, eval=TRUE}
-lengths <- c()
-for (i in 1:33){
-lengths <- c(lengths, length(lizards_sequences[[i]]))
+# calculating average length of original sequences
+avg_length = c()
+for (seq in 1:33) {
+  avg_length = c(avg_length, length(lizards_sequences[[seq]]))
 }
+avg_length = mean(avg_length)
 ```
 
-Now we can use the simulate the sequences by using the function *phangorn::simSeq()*. 
+Now we can simulate the sequences by using the function *phangorn::simSeq()*. 
 
 ```{r, echo=TRUE, eval=TRUE ,warning=FALSE}
-sequences_artificial <- list()
-for (j in 1:33){
-sequences_artificial[j] <- simSeq(tree, l = lengths[j], Q=transition_matrix , type = "DNA")
-}
+sequences_artificial <- simSeq(tree, l = avg_length, Q=transition_matrix , type = "DNA")
 ```
 
 Since in sequences are filled with integers from 1 to 4, do we have to replace the numbers by the letters a,b,c,d.
