@@ -43,10 +43,5 @@ get_artificial_sequence_dataset = function(original_dataset) {
   # reading original_dataset from fasta file 
   lizards_sequences = read.fasta("lizard_seqs.fasta")
 
-  # preparing data in fasta file (dna sequences include emtpy spaces which will be removed)
-  for (i in 1:length(lizards_sequences)) {
-    lizards_sequences[[i]] = lizards_sequences[[i]][lizards_sequences[[i]] != " "]
-  }
-
   get_artificial_sequence_dataset(lizards_sequences)
 

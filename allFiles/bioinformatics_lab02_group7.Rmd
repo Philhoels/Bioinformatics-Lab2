@@ -20,23 +20,16 @@ library(seqinr)
 
 At first, the dataset of the RAG1 gene sequences from 33 lizard species were downloaded from GenBank and saved in a fasta file using the provided R script *732A51 BioinformaticsHT2018 Lab02 GenBankGetCode.R.*. The code can be found in Appendix 1 (Data Import of original dataset).
 
+## Question 1.1
+
+The saved fasta-file has to be read in R so that we can work with that. The R code for the reading process can be found in Appendix 1.1 (Reading original data).
+
 ```{r, echo=FALSE, eval=TRUE}
 # reading original_dataset from fasta file 
 lizards_sequences = read.fasta("lizard_seqs.fasta")
-
-# preparing data in fasta file (dna sequences include emtpy spaces which will be removed)
-for (i in 1:length(lizards_sequences)) {
-  lizards_sequences[[i]] = lizards_sequences[[i]][lizards_sequences[[i]] != " "]
-}
 ```
 
-## Question 1.1
-
-The saved fasta-file has to be read in R so that we can work with that. After analysing the sequences, it becomes clear that there can be found many whitespaces (""). Since the artificial sequences should be simulated so that each nucleotide is to be independently and randomly drawn from the distribution given by the base composition in the true
-lizard sequences, the whitespaces have to be removed. Otherwise the artificial sequences are built on a probability distribution where the sum of all probabilities would not equal 1. The R code for the reading and preparation process can be found in Appendix 1.1 (Reading and preparing original data).
-
-After preparing the data, the artificial dataset is built by considering that it contains 33 sequences (each length of
-the sequences is the same as in the lizard dataset) so that for each real sequence an artificial one is created. As mentioned, the simulation of the artificial sequences is based on the distribution given by the base composition of the original dataset. 
+After that, the artificial dataset is built by considering that it contains 33 sequences (each length of the sequences is the same as in the lizard dataset) so that for each real sequence an artificial one is created. As mentioned, the simulation of the artificial sequences is based on the distribution given by the base composition of the original dataset. 
 
 The artificial dataset is submitted as the fasta file *artificial_dataset_1_1.fasta*.
 The written function for all these processes automatically prints the base composition in the simulated data compared to the base composition in the original data. An extract from the output can be seen here: 
@@ -540,11 +533,6 @@ Reading and preparing original data
 library(seqinr)
 # reading original_dataset from fasta file 
 lizards_sequences = read.fasta("lizard_seqs.fasta")
-
-# preparing data in fasta file (dna sequences include emtpy spaces which will be removed)
-for (i in 1:length(lizards_sequences)) {
-  lizards_sequences[[i]] = lizards_sequences[[i]][lizards_sequences[[i]] != " "]
-}
 ```
 
 Function code
