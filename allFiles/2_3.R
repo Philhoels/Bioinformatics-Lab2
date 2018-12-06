@@ -6,24 +6,10 @@ library(plsgenomics)
 library(ape)
 
 # getting all datasets in DNAStringSet format
-
   # original dataset
-    # readAAStringSet-function needs path of fasta file as input. The original dataset needs to be prepared and saved 
-    # so that the fasta file does not inlcude whitespaces anymore.
-      # reading original_dataset from fasta file 
-      lizards_sequences = read.fasta("lizard_seqs.fasta")
-      # preparing data in fasta file (dna sequences include emtpy spaces which will be removed)
-      for (i in 1:length(lizards_sequences)) {
-        lizards_sequences[[i]] = lizards_sequences[[i]][lizards_sequences[[i]] != " "]
-      }
-      # saving prepared fasta file
-      ape::write.dna(lizards_sequences, file ="lizards_sequences_no_whitespaces.fasta", format = "fasta", colsep = "")
-    # reading prepared fasta file as biostrings-object
-    lizards_sequences = readDNAStringSet("lizards_sequences_no_whitespaces.fasta")
-    
+  lizards_sequences = readDNAStringSet("lizard_seqs.fasta")
   # artificial_dataset_1_1
   artificial_dataset_1_1 = readDNAStringSet("artificial_dataset_1_1.fasta")
-    
   # artificial_dataset_1_2
   artificial_dataset_1_2 = readDNAStringSet("artificial_dataset_1_2.fasta")
   
