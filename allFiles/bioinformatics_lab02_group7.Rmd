@@ -387,9 +387,18 @@ for (i in 1:33){
   tga_reverse[i] <- str_count(string, pattern = "tga")
 }
 
+names_reverse <- names(reverse_complemented_lizards)
+df_reverse <- as.data.frame(cbind(names_reverse, taa_reverse, tag_reverse, tga_reverse, total_count_reverse = 
+                               taa_reverse + tag_reverse + tga_reverse))
+df_reverse
 ```
 
-
+```{r}
+stop_codons <- c(sum(as.numeric(df_all$total_count_2)), sum(as.numeric(df_all$total_count_3)), sum(as.numeric(df_reverse$total_count_reverse)))
+names(stop_codons) <- c("a1", "a2", "reverse_complemented")
+stop_codons
+```
+After reverse complementing the original dataset from the lizards, for this dataset we again determine the number of stopcodons observed. Compared to the two artificially created datasets, the numer of stop codons is smaller. We think this can be explained because creating artificial datasets of sequences completely randomly assigns letters in the sequence, whereas in the reverse complement, the sequence is based on the original sequences. The original sequences will never contain as much stop codons as the artifically created ones.
 
 # Question 2.2
 
