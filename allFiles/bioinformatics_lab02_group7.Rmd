@@ -373,6 +373,24 @@ df_all
 ```
 Interpreting stop codons as either "taa", "tag" or "tga" results in many stop codons for each sequence. In the original dataset this is highly unlikely, as a natural translation starts at a start codon and then continues until it reaches a stop codon. Or if it does not reach a stop codon at all.
 
+```{r}
+reverse_complemented_lizards <- read.fasta("lizards_reverse_complement.fasta")
+taa_reverse <- c()
+tag_reverse <- c()
+tga_reverse <- c()
+
+for (i in 1:33){
+  string <- reverse_complemented_lizards[[i]]
+  string <- paste(reverse_complemented_lizards[[i]], collapse = "")
+  taa_reverse[i] <-str_count(string, pattern = "taa")
+  tag_reverse[i] <- str_count(string, pattern = "tag")
+  tga_reverse[i] <- str_count(string, pattern = "tga")
+}
+
+```
+
+
+
 # Question 2.2
 
 ```{r, message=FALSE}
