@@ -415,6 +415,8 @@ We fitted a first order markov model on all sequences. Our assumption in our sim
 This violates the limited horizon: which is that the probability of being in a state at time t depends only on the state at time t minus 1. 
 We used sample {base}	function, which obviously samples without taking into account past states.
 
+Actually a first order markovchain is not ideal for the artifically created datasets as the letters are randomly assigned. Therefore there is no reason why there should be a connection between two subsequent letters in artifically created sequences.
+
 # Question 2.3
 
 To allign the sequences for each dataset (the original dataset *lizards_sequences*, the first artificial dataset *artificial_dataset_1_1* and the second artificial dataset *artificial_dataset_1_2*), the *plsgenomics* package was used. The *.fasta*-files for the datasets were transformed to a *DNAStringSet* - class within R. The uncorrected distance matrices created represent the hamming distance between each of the sequences in each dataset. The results of these distance matrices are plotted as heatmaps (using *plsgenomics* package) :
